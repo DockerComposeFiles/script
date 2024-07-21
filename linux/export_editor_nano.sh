@@ -11,7 +11,7 @@ add_editor_to_file() {
         if grep -q "$editor_export" "$file"; then
             echo "Der Eintrag '$editor_export' ist bereits in $file vorhanden."
         else
-            echo "$editor_export" >> "$file"
+            echo "$editor_export" >>"$file"
             echo "Der Eintrag '$editor_export' wurde zu $file hinzugefügt."
         fi
     else

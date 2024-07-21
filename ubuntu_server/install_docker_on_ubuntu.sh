@@ -2,7 +2,7 @@
 
 # Entfernen Sie alte Docker-Versionen und verwandte Pakete
 for pkg in docker.io docker-doc docker-compose docker-compose-v2 podman-docker containerd runc; do
-    sudo apt-get remove -y $pkg
+  sudo apt-get remove -y $pkg
 done
 
 # Entfernen Sie die alte Docker-Quelle
@@ -26,8 +26,8 @@ sudo chmod a+r /etc/apt/keyrings/docker.gpg
 # Fügen Sie das Docker-Repository zur Paketquelle hinzu
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo $VERSION_CODENAME) stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+  $(. /etc/os-release && echo $VERSION_CODENAME) stable" |
+  sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 
 # Aktualisieren Sie die Paketliste erneut
 sudo apt update

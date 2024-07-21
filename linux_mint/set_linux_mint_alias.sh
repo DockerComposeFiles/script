@@ -32,7 +32,7 @@ if ! grep -q "$ALIASES_START" ~/.bashrc || ! grep -q "$ALIASES_END" ~/.bashrc; t
         echo "$ALIASES_START"
         echo "$ALIASES_CONTENT"
         echo "$ALIASES_END"
-    } >> ~/.bashrc
+    } >>~/.bashrc
 
     # Anwenden der Änderungen
     source ~/.bashrc

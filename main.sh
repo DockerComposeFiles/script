@@ -5,6 +5,8 @@
 # Funktion zum Sammeln von Skripten aus einem Verzeichnis
 collect_scripts() {
   local dir="$1"
+  options+=("$1")
+
   for script in "$dir"/*.sh; do
     # Prüfe, ob das Skript existiert
     if [ -f "$script" ]; then
@@ -23,16 +25,19 @@ for script in *.sh; do
   fi
 done
 
-# Prüfe das Betriebssystem und füge entsprechende Skripte hinzu
-collect_scripts "docker"
+# Prüft OS
+if ps aux | grep -q -E 'Xorg|wayland'; then
+  if [[ "$(lsb_release -is 2>/dev/null)" == "Linuxmint" ]]; then
+    collect_scripts "linux_mint"
+  fi
+else
+  if [[ "$(lsb_release -is 2>/dev/null)" == "Ubuntu" ]]; then
+    collect_scripts "ubuntu_server"
+  fi
+fi
+
 if [[ "$(uname)" == "Linux" ]]; then
   collect_scripts "linux"
-fi
-if [[ "$(lsb_release -is 2>/dev/null)" == "Ubuntu" ]]; then
-  collect_scripts "ubuntu"
-fi
-if [[ "$(lsb_release -is 2>/dev/null)" == "Linuxmint" ]]; then
-  collect_scripts "linux_mint"
 fi
 
 # Füge die Option "Beenden" hinzu
@@ -57,21 +62,21 @@ draw_menu() {
 handle_input() {
   read -s -n 1 key
   case $key in
-    A) # Up Arrow
-      ((cursor--))
-      if [ $cursor -lt 0 ]; then
-        cursor=$((${#options[@]} - 1))
-      fi
-      ;;
-    B) # Down Arrow
-      ((cursor++))
-      if [ $cursor -ge ${#options[@]} ]; then
-        cursor=0
-      fi
-      ;;
-    "") # Enter Key
-      return 0
-      ;;
+  A) # Up Arrow
+    ((cursor--))
+    if [ $cursor -lt 0 ]; then
+      cursor=$((${#options[@]} - 1))
+    fi
+    ;;
+  B) # Down Arrow
+    ((cursor++))
+    if [ $cursor -ge ${#options[@]} ]; then
+      cursor=0
+    fi
+    ;;
+  "") # Enter Key
+    return 0
+    ;;
   esac
   return 1
 }
@@ -84,10 +89,21 @@ while true; do
     if [ "${options[$cursor]}" == "Beenden" ]; then
       echo "Beenden..."
       break
+
     else
-      echo "Starte ${options[$cursor]}..."
-      ./"${options[$cursor]}"
-      read -p "Drücke eine beliebige Taste, um fortzufahren..."
+      local selected_item="${options[$cursor]}"
+      if [ -f "$selected_item" ]; then
+        #./"$selected_item"
+        echo "Starte ${options[$cursor]}..."
+        ./"${options[$cursor]}"
+        read -p "Drücke eine beliebige Taste, um fortzufahren..."
+      elif [ -d "$selected_item" ]; then
+        return 0
+      else
+        echo "Unbekannter Typ oder Fehler beim Zugriff auf ${selected_item}"
+      fi
+      return 0
+
     fi
   fi
 done

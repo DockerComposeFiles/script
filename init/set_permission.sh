@@ -41,7 +41,7 @@ function file_permissions() {
         if [[ $count -gt 0 ]]; then
             find . -type f -name "$file" -exec chmod "$permission" {} \;
             # echo "$count '$file' auf $permission gesetzt"
-        # else
+            # else
             # echo "Fehler beim setzen von Berechtigungen: Keine Dateien mit dem Namen '$file' gefunden."
         fi
     done
