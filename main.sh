@@ -85,19 +85,21 @@ handle_input() {
 while true; do
   draw_menu
   handle_input
+
   if [ $? -eq 0 ]; then
     if [ "${options[$cursor]}" == "Beenden" ]; then
-      echo "Beenden..."
       break
 
     else
-      local selected_item="${options[$cursor]}"
+      selected_item="${options[$cursor]}"
+      #read -p "gestoppt zum debug: ${options[$cursor]}"
       if [ -f "$selected_item" ]; then
-        #./"$selected_item"
         echo "Starte ${options[$cursor]}..."
+        #bash ./"$selected_item" # mit Interpreter
         ./"${options[$cursor]}"
         read -p "Drücke eine beliebige Taste, um fortzufahren..."
       elif [ -d "$selected_item" ]; then
+
         return 0
       else
         echo "Unbekannter Typ oder Fehler beim Zugriff auf ${selected_item}"
