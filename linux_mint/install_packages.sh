@@ -5,9 +5,11 @@ apt update
 ## core
 apt install git flatpak
 ## file
-xargs sudo apt-get install -y < "./linux_mint/apt.list"
+#xargs sudo apt-get install -y < "./linux_mint/apt.list"
 
 # flatpak
 ## core
+#flatpak install flathub <app>
 #flatpak install -y --from=flathub <app>
-flatpak install flathub com.obsproject.Studio
+## file
+xargs flatpak install -y --from=flathub < "./flatpak.list"

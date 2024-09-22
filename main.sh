@@ -4,8 +4,9 @@
 
 # Funktion zum Sammeln von Skripten aus einem Verzeichnis
 collect_scripts() {
+  #local options=() # Deklariere options als lokales Array
   local dir="$1"
-  options+=("$1")
+  options+=("$dir")
 
   for script in "$dir"/*.sh; do
     # Prüfe, ob das Skript existiert
