@@ -1,4 +1,4 @@
-# USB Script
+# System Initialization
 
 Skriptsammlung zum einfachen Einrichten und Absichern neuer Systeme per Kommandozeile.
 
@@ -11,6 +11,6 @@ Plattformabhängige Skripte werden nur bei der richtigen Plattform angezeigt
 
 0. Verstehe was die skripte machen und ob du sie brauchst
 1. Kopiere das Projekt auf ein USB-Stick 
-2. Verbinde den USB-Stick mit dem neuen System
+2. Verbinde den USB-Stick mit dem neuen System oder Repo downloaden
 3. führe die ./main aus
 4. Wähle die benötigten Menüpunkte an
